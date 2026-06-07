@@ -1,0 +1,140 @@
+:root {
+  --primary-color: #4b8673;
+  --secondary-color: #5fd068;
+  --accent-color: #f5df99;
+  --bg-color: #f6fbf4;
+  --card-bg: #ffffff;
+  --text-main: #2c3e50;
+  --text-muted: #7f8c8d;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+body {
+  background-color: var(--bg-color);
+  font-family: 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  color: var(--text-main);
+  line-height: 1.6;
+}
+
+.logo {
+  width: 13em;
+  height: auto;
+  transition: transform 0.3s ease;
+}
+
+.logo:hover {
+  transform: scale(1.05);
+}
+
+h1 {
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 1.5rem;
+}
+
+h1 strong {
+  font-weight: 800;
+  color: var(--primary-color);
+  position: relative;
+}
+
+/* Form Styling */
+.calorie-form-container {
+  background: var(--card-bg);
+  padding: 3rem;
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  margin-top: -50px;
+  position: relative;
+  z-index: 10;
+}
+
+.inputstyle {
+  padding: 15px 25px !important;
+  border-radius: 12px !important;
+  border: 2px solid #edf2f7 !important;
+  font-size: 1.1rem !important;
+  transition: all 0.3s ease !important;
+}
+
+.inputstyle:focus {
+  border-color: var(--secondary-color) !important;
+  box-shadow: 0 0 0 4px rgba(95, 208, 104, 0.1) !important;
+  outline: none !important;
+}
+
+.whoop {
+  background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+  border: none;
+  border-radius: 12px !important;
+  padding: 12px 30px !important;
+  font-size: 1.2rem !important;
+  font-weight: 600 !important;
+  color: #fff !important;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+  width: auto !important;
+}
+
+.whoop:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(75, 134, 115, 0.2);
+}
+
+/* Results Content */
+.caloriescont {
+  background-color: var(--card-bg);
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(0,0,0,0.03);
+}
+
+.caloriescont ul {
+  padding: 0;
+}
+
+.caloriescont ul li {
+  list-style: none;
+  padding: 15px 0;
+  border-bottom: 1px solid #f1f5f9;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 500;
+}
+
+.caloriescont ul li span {
+  color: var(--primary-color);
+  font-weight: 700;
+}
+
+.servingsize {
+  background: var(--text-main);
+  padding: 12px 20px;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.caloriescont h2, .caloriescont h4 {
+  color: var(--primary-color);
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+/* Animations */
+.animate-up {
+  animation: fadeInUp 0.8s ease-out both;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
