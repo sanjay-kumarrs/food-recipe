@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <!-- ======= Hero Section ======= -->
+    <section id="hero">
+      <div class="hero-container">
+        <div id="heroCarousel" data-bs-interval="5000" class="carousel slide carousel-fade" data-bs-ride="carousel">
+  
+          <ol class="carousel-indicators" id="hero-carousel-indicators"></ol>
+  
+          <div class="carousel-inner" role="listbox">
+  
+            <!-- Slide 1 -->
+            <div class="carousel-item active" style="background-image: url(/static/assets/img/slide/slide-2.jpg);">
+              <div class="carousel-container">
+                <div class="carousel-content">
+                  <h2 class="animate__animated animate__fadeInDown"><span>Delicious</span> fooding</h2>
+                  <p class="animate__animated animate__fadeInUp">Food is not just nourishment for the body; 
+                    it's nourishment for the soul. It has the power to evoke memories, create connections, 
+                    and bring people together in a way that nothing else can.</p>
+                  <div>
+                    <form  method="get">
+                      
+                      <input type="text" name="recipe_name" placeholder="Search...">
+                      <input type="submit" value="Search">
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <a class="carousel-control-prev" href="#heroCarousel" role="button" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>
+            </a>
+    
+            <a class="carousel-control-next" href="#heroCarousel" role="button" data-bs-slide="next">
+              <span class="carousel-control-next-icon bi bi-chevron-right" aria-hidden="true"></span>
+            </a>
+    
+          </div>
+        </div>
+      </section><!-- End Hero -->
+      <div class="container mt-5">
+
+      
+      <main id="main">
+        <body>
+ 
+         <section id="menu" class="menu">
+          <div class="container">
+            <div class="section-title">
+              <h2>Check our tasty <span>Menu</span></h2>
+            </div>
+          </div>
+          <div class="menu-container">
+            {% for recipe in recipeData %}
+            <div class="menu-item">
+              <img src="{{ recipe.recipe_image.url }}" alt="{{ recipe.recipe_name }}">
+              <div class="menu-content">
+                <a href="{% url 'recipe_details' %}?recipe_name={{ recipe.recipe_name }}">{{ recipe.recipe_name }}</a>
+             
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </section>
+{% endblock %}

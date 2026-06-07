@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section id="chefs" class="chefs">
+    <div class="container">
+
+      <div class="section-title">
+        <h2>Our Proffesional <span>Chefs</span></h2>
+        <p>Enjoy the deliciious culinary experience with our specialised chefs.</p>
+      </div>
+
+      <div class="row">
+        {% for chefs in chefData %}
+
+        <div class="col-lg-4 col-md-6">
+          <div class="member">
+            <div class="pic">
+              <br>
+             <img src="{{ chefs.chef_img.url}}"></div>
+             <div class="member-info">
+              <br>
+              <h4><a href="{% url 'chef_info' %}?chef_name={{ chefs.chef_name }}">{{chefs.chef_name}} </a> </h4>
+              {{chefs.cusine}}
+              <p>Age:  {{ chefs.chef_age }}</p>
+              <p>Experience: {{ chefs.chef_exp}}</p>
+              <p>Description:{{ chefs.chef_info | safe }}</p>
+           <!-- <p>Nutrition: <br>{{ recipe.nut }}</p>
+            <p>Protein: <br>{{ recipe.protein }}</p>
+           -->  
+              <div class="social">
+                <a href=""><i class="bi bi-twitter"></i></a>
+                <a href=""><i class="bi bi-facebook"></i></a>
+                <a href=""><i class="bi bi-instagram"></i></a>
+                <a href=""><i class="bi bi-linkedin"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br>
+        {% endfor %}
+
+    </div>
+
+</div>
+</section>
+
+
+{% endblock %}

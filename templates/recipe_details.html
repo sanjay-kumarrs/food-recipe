@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section id="hero">
+  <div class="hero-container">
+    <div id="heroCarousel" data-bs-interval="5000" class="carousel slide carousel-fade" data-bs-ride="carousel">
+
+      <ol class="carousel-indicators" id="hero-carousel-indicators"></ol>
+
+      <div class="carousel-inner" role="listbox">
+
+        <!-- Slide 1 -->
+        <div class="carousel-item active" style="background-image: url(/static/assets/img/slide/slide-4.jpg);">
+          <div class="carousel-container">
+            <div class="carousel-content">
+              <h2 class="animate_animated animate_fadeInDown"><span>Delicious</span> fooding</h2>
+              <p class="animate_animated animate_fadeInUp"> We are committed to continuously improving and expanding our application, 
+                incorporating user feedback, and staying at the forefront of culinary innovation. 
+                Our goal is to be your trusted companion on your culinary journey, inspiring you to push boundaries, 
+                try new ingredients, and create unforgettable dining experiences for yourself and your loved ones.</p>
+              <div>
+                <a href="{% url 'recipe' %}" class="btn-menu animate_animated animate_fadeInUp scrollto">Our Menu</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+       
+
+       
+
+      </div>
+
+      <a class="carousel-control-prev" href="#heroCarousel" role="button" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>
+      </a>
+
+      <a class="carousel-control-next" href="#heroCarousel" role="button" data-bs-slide="next">
+        <span class="carousel-control-next-icon bi bi-chevron-right" aria-hidden="true"></span>
+      </a>
+
+    </div>
+  </div>
+</section><!-- End Hero -->
+<main>
+  <section class="unique-recipe">
+      <link href="/static/assets/css/recipe.css" rel="stylesheet">
+  
+      {% if recipe %}
+      <div class="unique-image">
+        <br><br><br>
+          <img src="{{ recipe.recipe_image.url }}"><br><br><br>
+          <hr>
+          <div class="unique-nutrition">
+            <img src="{{ recipe.nut.url }}">
+          </div>
+      </div>
+    </div>
+      <div class="unique-content">
+
+          <div class="unique-intro">
+              
+            <h1 >{{ recipe.recipe_name }}</h1> 
+              <p>{{ recipe.intro|safe }}</p>
+              <div class="timings-box">
+                <p><span class="symbol">🍳</span><span class="label">Prep Time:</span> {{ recipe.prep_time }}</p>
+                <p><span class="symbol">🔥</span><span class="label">Cook Time:</span> {{ recipe.cook_time }}</p>
+                <p><span class="symbol">⏳</span><span class="label">Total Time:</span> {{ recipe.total_time }}</p>
+                <p><span class="symbol">🍽️</span><span class="label">Servings:</span> {{ recipe.servings }}</p>
+            </div>
+          </div>
+          <div class="unique-ingredients">
+              <p>Ingredients:<br> {{ recipe.ingredients | safe }}</p>
+          </div>
+          <div class="unique-make">
+              <p>Making: <br>{{ recipe.making |safe}}</p>
+          </div>
+      </div>
+      {% endif %}
+  </section>
+</main>
+
+
+
+
+{% endblock %}

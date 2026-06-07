@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+{% load mathfilters %} {% load humanize%} <!--matah filters are a seprate module that have to be installed using pip-->
+<!-- humanize is used to humanize the format so that we can easily understand-->
+<html lang="en">
+
+<head>
+    
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous" />
+    <link href="/static/assets/css/style.css" rel="stylesheet" type="text/css" />
+    <title>Foodie Calorie Finder</title>
+    <link href="/static/assets/css/style1.css" rel="stylesheet">
+<section id="topbar" class="d-flex align-items-center fixed-top topbar-transparent">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-center justify-content-lg-start">
+ 
+    </div>
+  </section>
+  <header id="header" class="fixed-top d-flex align-items-center header-transparent">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+
+      <div class="logo me-auto">
+       
+    
+      </div>
+
+      <nav id="navbar" class="navbar order-last order-lg-0">
+        <ul>
+          <li><a class="nav-link scrollto active" href="{% url 'home' %}">Home</a></li>
+          <li><a class="btn nav-link scrollto" href="{% url 'chefdetails'%}">Chefs</a></li>
+          <li><a class="btn" href="{% url 'recipe' %}">Menus</a></li>
+          <li><a class="btn" href="{% url 'cal' %}">Calculator</a></li>
+          <li class="dropdown"><a href="#"><span>More</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a class="nav-link scrollto" href="{% url 'home' %}#about">About</a></li>
+              <li><a class=" btn nav-link scrollto" href="{% url 'home' %}#contact">Contact</a></li>
+              
+              {% if user.is_authenticated %}  
+              <li><a href="{% url 'logout' %}">Logout</a></li>
+              
+                {% if user.username == 'admin' %}
+                <li><a href="admin/" class="btn">panel</a></li>
+                {% endif %}
+                {% else %}
+          <!-- Display the "Login" button for non-authenticated users -->
+              <a href="{% url 'login' %}" class="btn">Login</a>
+                {% endif %}
+              
+            </ul>
+          </li>
+ 
+       </ul>
+             
+             
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+       
+      </nav><!-- .navbar -->
+
+    </div>
+  </header><!-- End Header -->
+
+<body>
+    <section id="hero">
+        <div class="hero-container">
+          <div id="heroCarousel" data-bs-interval="5000" class="carousel slide carousel-fade" data-bs-ride="carousel">
+    
+            <ol class="carousel-indicators" id="hero-carousel-indicators"></ol>
+    
+            <div class="carousel-inner" role="listbox">
+    
+              <!-- Slide 1 -->
+              <div class="carousel-item active" style="background-image: url(/static/assets/img/slide/slide-5.jpg);">
+                <div class="carousel-container">
+                  <div class="carousel-content">
+                    
+                    <p class="animate__animated animate__fadeInUp">“Food is not just eating energy. It’s an experience.” - Guy Fier</p>
+                    
+                  </div>
+                </div>
+              </div>
+              <a class="carousel-control-prev" href="#heroCarousel" role="button" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>
+              </a>
+      
+              <a class="carousel-control-next" href="#heroCarousel" role="button" data-bs-slide="next">
+                <span class="carousel-control-next-icon bi bi-chevron-right" aria-hidden="true"></span>
+              </a>
+      
+            </div>
+          </div>
+        </section>
+    <div class="container">
+        <br><br><br>
+       <!-- {{api}} it is just usesd to print the api and to check if a particular dish has-->
+
+        <div class="row justify-content-center">
+            <div class="col-md-8 text-center calorie-form-container">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <input type="number" name="weight" class="form-control inputstyle"
+                                placeholder="Weight (kg)">
+                        </div>
+                        <div class="col-md-5">
+                            <input type="text" name="query" class="form-control inputstyle"
+                                placeholder="Search food (e.g. 1 pizza)" required>
+                        </div>
+                        <div class="col-md-3">
+                            <button class="btn whoop w-100 h-100" type="submit" id="button-addon2">Find</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-8 text-center">
+                {% if api %} <!--this condition is here so that the api is ifed-->
+                {% if api == "oops! There was an error " %} <!--here it checks whether the entered query matches or not-->
+                <div class="alert alert-warning"> Oh no! something went wrong.Please try again in sometime. </div>
+                {% else %} <!-- if there is no error then the rest is executed-->
+                <h1> {{api.0.name | capfirst}} has a total of <strong> {{api.0.calories}} Calories</strong>
+                    <!-- | is known as a pipe -->
+                    {% if api.0.calories > 200 %}
+                    <img src="/static/assets/calorie/shocked.png" class="img-responsive" />
+                    {% endif%}
+                </h1>
+                {% if api.0.sodium_mg > 1000%}
+                <div class="alert alert-danger d-flex align-items-center mt-3" role="alert">
+                    <div>
+                        This food contains an high amount of sodium. High Sodium cuases Sever dehydration and water
+                        retention.
+                    </div>
+                </div>
+                {% endif %}
+                {% if api.0.sugar_g > 100%}
+                <div class="alert alert-danger d-flex align-items-center mt-3" role="alert">
+                    <div>
+                        This food contains an high amount of sugar. Sugar causes insulin spikes and is number 1 cause for Obesity.
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row justify-content-center mt-5 mb-5 animate-up">
+            <div class="col-md-10 caloriescont">
+                <div class="row">
+
+                        <div class="col-md-6">
+                            <h2 class="mt-3 mb-4">Nutritional Values </h2><span></span>
+                            <ul>
+                                <li class="servingsize">Serving Size per 100/Grams <span class="float-end"></span></li>
+                                <li>Carbohydrates: <span class="float-end">{{api.0.carbohydrates_total_g}}</span>
+                                </li>
+                                <li>Cholesterol: <span class="float-end">{{api.0.cholesterol_mg}}</span></li>
+                                <li>Saturated fat: <span class="float-end">{{api.0.fat_saturated_g}}</span></li>
+                                <li>Total Fat: <span class="float-end">{{api.0.fat_total_g}}</span></li>
+                                <li>Fiber Content: <span class="float-end">{{api.0.fiber_g}}</span></li>
+                                <li>Potassium <span class="float-end">{{api.0.potassium_mg}}</span></li>
+                                <li>Protein: <span class="float-end">{{api.0.protein_g}}<span></li>
+                                <li>Sodium:<span class="float-end">{{api.0.sodium_mg}}</span></li>
+                                <li>Sugar: <span class="float-end">{{api.0.sugar_g}}</span></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6 mb-5">
+                            <h4 class="mt-3 mb-4">To burn {{ api.0.calories}} calories you will have to</h4>
+                            <div class="d-flex align-items-center mb-5">
+                                <div class="flex-shrink-0">
+                                    <img src="/static/assets/calorie/running.png" alt="...">
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <h5> Jog </h5>
+                                    <p>you will have to jog for <strong>
+                                        {{ api.0.calories | div:229 | mul:60 | floatformat:0}}</strong> Minutes</p>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center mb-5">
+                                <div class="flex-shrink-0">
+                                    <img src="/static/assets/calorie/yoga.png" alt="...">
+                                </div>
+                                <div class="flex-grow-1 ms-4">
+                                    <h5> Do Power Yoga </h5>
+                                    <p>you will have to Power Yoga for <strong>
+                                        {{ api.0.calories | div:223 | mul:60 | floatformat:0}} </strong> Minutes</p>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center mb-5">
+                                <div class="flex-shrink-0">
+                                    <img src="/static/assets/calorie/weightlifter.png" alt="...">
+                                </div>
+                                <div class="flex-grow-1 ms-4">
+                                    <h5>Get a Gym Workout </h5>
+                                    <p>you will have to lift weight for <strong>
+                                        {{ api.0.calories | div:483 | mul:60 | floatformat:0}} </strong> Minutes </p>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0">
+                                    <img src="/static/assets/calorie/walking.png" alt="...">
+                                </div>
+                                <div class="flex-grow-1 ms-1">
+                                    <h5> Go for a Brisk Walk </h5>
+                                    <p>you will have to brisk walk for <strong>
+                                        {{ api.0.calories | div:294 | mul:60 | floatformat:0}} </strong> Minutes</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <canvas id="myChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                <script>
+                  const ctx = document.getElementById('myChart');
+                
+                  new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                      labels: ['Carbohydrates', 'Cholesterol', 'Saturated fat', 'Total fat', 'Fiber Content', 'Potassium','Protein','Sodium','Sugar'],
+                      datasets: [{
+                        label: 'Nutritional values of {{ api.0.name | capfirst}}',
+                        data: [
+                            {{api.0.carbohydrates_total_g}},
+                            {{api.0.cholesterol_mg}},
+                            {{api.0.fat_saturated_g}},
+                            {{api.0.fat_total_g}},
+                            {{api.0.fiber_g}},
+                            {{api.0.potassium_mg}},
+                            {{api.0.protein_g}},
+                            {{api.0.sodium_mg}},
+                            {{api.0.sugar_g}}
+                        ],
+                        borderWidth: 1
+                      }]
+                    },
+                    options: {
+                      scales: {
+                        y: {
+                          beginAtZero: true
+                        }
+                      }
+                    }
+                  });
+                </script>
+                {% endif %}
+                {% endif %}
+            </div>
+ <!-- ======= Footer ======= -->
+ <footer id="footer">
+    <div class="container">
+      <h3>Delicious</h3>
+      <p>"One cannot think well, love well, sleep well, if one has not dined well." - Virginia Woolf.</p>
+      <div class="social-links">
+        <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+        <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+        <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+        <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+        <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+      </div>
+      <div class="copyright">
+        &copy; Copyright <strong><span>Delicious</span></strong>. All Rights Reserved
+      </div>
+     
+  </footer><!-- End Footer -->
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  
+  <!-- Template Main JS File -->
+  <script src="/static/assets/js/main.js"></script>
+  
+  </body>
+  
+  </html>
