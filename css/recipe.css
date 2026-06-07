@@ -1,0 +1,88 @@
+/* Apply border-box box-sizing model to all elements for consistent sizing */
+* {
+    box-sizing: border-box;
+}
+
+
+/* Style the main content container */
+main {
+    max-width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f7f7f7;
+}
+
+/* Style the unique recipe section */
+.unique-recipe {
+    display: flex;
+    gap: 20px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    position: relative; /* Set position relative for positioning children elements */
+}
+
+/* Style the unique recipe image */
+.unique-image img {
+    width: 500px;
+    height: 500px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    object-fit: cover; /* Ensure the image covers the container */
+}
+/* Style the unique nutrition image */
+.unique-nutrition img {
+    width: 500px;
+    height: 800px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    object-fit: cover; /* Ensure the image covers the container */
+}
+
+/* Style the unique recipe introduction, ingredients, and making sections */
+.unique-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-self: flex-start;
+}
+
+.unique-content .unique-intro,
+.unique-content .unique-ingredients,
+.unique-content .unique-make {
+    font-size: 16px;
+    color: #555;
+}
+.timings-box {
+    display: grid;
+    align-items: center;
+    border: 2px solid;
+    padding: 10px;
+    width: auto;
+    text-align: center;
+    margin: 20px auto;
+    background-color: #ffe4b5;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.label-symbol {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.label {
+    font-weight: bold;
+    color: #ff6347;
+    margin-right: 5px;
+}
+
+.symbol {
+    font-size: 24px;
+    color: #ff6347;
+}
