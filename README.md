@@ -441,4 +441,3 @@ This project uses the [Delicious Bootstrap Template](https://bootstrapmade.com/d
 <p align="center">
   Made with ❤️ by the Delicious Team
 </p>
-..
