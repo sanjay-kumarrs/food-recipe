@@ -1,6 +1,6 @@
 # 🍽️ Delicious — Food Recipe Web Application
 
-A full-featured **Django-based food recipe web application** that allows users to explore recipes, discover professional chefs, calculate nutritional information for any food item, and interact with a vibrant culinary community...
+A full-featured **Django-based food recipe web application** that allows users to explore recipes, discover professional chefs, calculate nutritional information for any food item, and interact with a vibrant culinary community.
 
 ---
 
